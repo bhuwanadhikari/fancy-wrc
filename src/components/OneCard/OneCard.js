@@ -15,33 +15,40 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => {
+    const marginValue = (window.innerWidth % 350) / (parseInt(window.innerWidth / 350) * 2)
+    console.log(marginValue)
 
-    card: {
-        maxWidth: 345,
-        margin: 3,
-        float: 'left'
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
-}));
+    return {
+        card: {
+            maxWidth: 350,
+            marginLeft: marginValue,
+            marginRight: marginValue,
+            marginBottom: 5,
+            marginTop: 2,
+            float: 'left'
+        },
+        media: {
+            height: '400px',
+            width: '350px'
+        },
+        expand: {
+            transform: 'rotate(0deg)',
+            marginLeft: 'auto',
+            transition: theme.transitions.create('transform', {
+                duration: theme.transitions.duration.shortest,
+            }),
+        },
+        expandOpen: {
+            transform: 'rotate(180deg)',
+        },
+        avatar: {
+            backgroundColor: red[500],
+        },
+    }
+});
 
 function OneCard(props) {
     const classes = useStyles();
@@ -61,10 +68,10 @@ function OneCard(props) {
     return (
         <Card className={classes.card}>
             <CardHeader
+                style={{ paddingTop: 3, paddingBottom: 3, backgroundColor: '#ffaac7', fontWeight: 'bold' }}
                 avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                        F
-          </Avatar>
+
+                    <a href={'https://facebook.com' + props.personObject.username}><FacebookIcon /></a>
                 }
                 action={
                     <IconButton aria-label="settings">
@@ -74,14 +81,12 @@ function OneCard(props) {
                 title={props.personObject.name}
                 subheader={props.personObject.username}
             />
-            <img src={props.personObject.pictureUrl} alt={props.personObject.name} />
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook together with your
-                    guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
+            <CardMedia
+                className={classes.media}
+                image={props.personObject.pictureUrl}
+            />
+
+            <CardActions style={{ padding: 0, backgroundColor: '#ffaac7' }} disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
