@@ -1,0 +1,42 @@
+.image-box {
+    display: block;
+    margin: auto;
+    cursor: pointer
+}
+
+
+
+.girl-image {
+    height: calc(50vh - 56px);
+    margin: 4px auto;
+    max-width: 500px;
+    background-color: red;
+    border-radius: 5px;
+    border: 2px solid #3f52b5
+}
+
+
+
+/*For DESKTOPS ONLY*/
+@media only screen and (min-width: 500px) {
+
+
+    .command{
+        padding:10px
+    }
+
+    .image-box {
+        display: inline;
+    }
+
+
+
+    .girl-image {
+        width: 40%;
+        margin: 10px;
+        height: auto;
+        background-color: red;
+        border-radius: 5px;
+        border: 2px solid #3f52b5
+    }
+}
