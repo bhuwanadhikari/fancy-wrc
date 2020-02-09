@@ -1,15 +1,37 @@
-.agaadiko{
+.list-box {
     display: inline-block;
+    padding: 20px;
+    padding-bottom: 5px;
+    margin: 8px;
+    background-color: #c5c9df;
+    border-radius: 8px;
 }
 
-.paxaadiko{
-    display: inline-block
+.agaadiko {
+    display: block;
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+}
+
+.paxaadiko {
+    display: block;
 }
 
 
-.rank-value{
-    font-size: 2em;
+.iconpart {
+    display: inline;
+    cursor: pointer;
 }
-.rank-img{
-    height: 200px
+
+.rank-value {
+    display: inline;
+    font-size: 20px;
+}
+
+.rank-img {
+    height: 200px;
+    display: block;
+    border-radius: 5px;
+    border: 1px solid #542E71;
 }

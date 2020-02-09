@@ -15,6 +15,9 @@
     border: 2px solid #3f52b5
 }
 
+.one-footer{
+}
+
 
 
 /*For DESKTOPS ONLY*/
@@ -32,7 +35,8 @@
 
 
     .girl-image {
-        width: 40%;
+        width:40%;
+        max-width: 400px;
         margin: 10px;
         height: auto;
         background-color: red;
