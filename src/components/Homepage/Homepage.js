@@ -7,8 +7,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Main from '../Main/Main'
-import DuitaPhoto from '../DuitaPhoto/DuitaPhoto'
-import EutaPhoto from '../EutaPhoto/EutaPhoto'
+import Beautiful from '../Beautiful/Beautiful'
+import Noticed from '../Noticed/Noticed'
+import Crush from '../Crush/Crush'
 import Navbar from '../Navbar/Navbar'
 import Rank from '../Rank/Rank'
 import './Homepage.css'
@@ -25,6 +26,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const commands = [
+    'Who is more beautiful?',
+    'Have you noticed her?',
+    'Do you have crush on her?',
+]
+
 export default function ButtonAppBar() {
     const [activeTab, setActiveTab] = React.useState('beautiful')
     const [toGetRank, setToGetRank] = React.useState(0)
@@ -35,21 +42,31 @@ export default function ButtonAppBar() {
         setActiveTab(tabName)
     }
 
+    React.useEffect(() => {
+        //api call to get the all girls details
+    }, [])
 
+    const bpayload = {
+        command: 'Who is more beautiful?'
+    }
+    const npayload = {
+        command: 'Have you noticed her before?'
+    }
+    const cpayload = {
+        command: 'Do you have crush on her?'
+    }
 
     return (
         <div className={classes.root}>
             <Navbar updateActiveTab = {updateActiveTab} activeTab= {activeTab}/>
             {/* <Main/> */}
             {/* <EutaPhoto/> */}
-            {activeTab === 'beautiful'? <DuitaPhoto/>:null}
-            {activeTab === 'popular'? <DuitaPhoto/>:null}
-            {activeTab === 'noticed'? <EutaPhoto/>:null}
-            {activeTab === 'crush'? <EutaPhoto/>:null}
+            {activeTab === 'beautiful'? <Beautiful payload = {bpayload} />:null}
+            {activeTab === 'noticed'? <Noticed payload = {npayload} />:null}
+            {activeTab === 'crush'? <Crush payload = {cpayload} />:null}
             {/* <Rank/> */}
         </div>
     );
 }
-
 
  

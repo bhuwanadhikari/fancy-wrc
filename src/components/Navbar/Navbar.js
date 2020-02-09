@@ -35,32 +35,25 @@ export default function Navbar(props) {
         <div className={classes.root}>
             <AppBar position="static" >
                 <Toolbar>
-                    <Typography variant="h6" style={{ fontSize: '0.7em', fontWeight: 'bold' }} className={classes.title}>
+                    <Typography variant="h6" style={{ fontSize: '0.75em', fontWeight: 'bold' }} className={classes.title}>
                         Glamorous WRC
                     </Typography>
                     <Button
-                        style={{ fontSize: '0.6em', fontWeight: 'bold' ,borderRadius: 0, borderBottom: activeTab ==='beautiful'?'2px solid white': 0 }}
+                        style={{ fontSize: '0.75em', fontWeight: 'bold' ,borderRadius: 0, borderBottom: activeTab ==='beautiful'?'2px solid white': 0 }}
                         color="inherit"
                         onClick={()=> _clickTab('beautiful')}
                     >
                         {" "}Most Beautiful
                     </Button>
                     <Button
-                        style={{ fontSize: '0.6em', fontWeight: 'bold',borderRadius: 0, borderBottom: activeTab ==='popular'?'2px solid white': 0 }}
-                        color="inherit"
-                        onClick={()=> _clickTab('popular')}
-                    >
-                        {" "}Most Popular
-                    </Button>
-                    <Button
-                        style={{ fontSize: '0.6em', fontWeight: 'bold',borderRadius: 0, borderBottom: activeTab ==='noticed'?'2px solid white': 0 }}
+                        style={{ fontSize: '0.75em', fontWeight: 'bold',borderRadius: 0, borderBottom: activeTab ==='noticed'?'2px solid white': 0 }}
                         color="inherit"
                         onClick={()=> _clickTab('noticed')}
                     >
                         {" "}Most Noticed
                     </Button>
                     <Button
-                        style={{ fontSize: '0.6em', fontWeight: 'bold',borderRadius: 0, borderBottom: activeTab ==='crush'?'2px solid white': 0 }}
+                        style={{ fontSize: '0.75em', fontWeight: 'bold',borderRadius: 0, borderBottom: activeTab ==='crush'?'2px solid white': 0 }}
                         color="inherit"
                         onClick={()=> _clickTab('crush')}
                     >
