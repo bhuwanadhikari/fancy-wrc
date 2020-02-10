@@ -14,6 +14,9 @@ import Navbar from '../Navbar/Navbar'
 import Rank from '../Rank/Rank'
 import './Homepage.css'
 
+
+const rawDamen = require('../../assets/data/dumbasData.json')
+
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -61,9 +64,9 @@ export default function ButtonAppBar() {
             <Navbar updateActiveTab = {updateActiveTab} activeTab= {activeTab}/>
             {/* <Main/> */}
             {/* <EutaPhoto/> */}
-            {activeTab === 'beautiful'? <Beautiful payload = {bpayload} />:null}
-            {activeTab === 'noticed'? <Noticed payload = {npayload} />:null}
-            {activeTab === 'crush'? <Crush payload = {cpayload} />:null}
+            {activeTab === 'beautiful'? <Beautiful payload = {{rawDamen}} />:null}
+            {activeTab === 'noticed'? <Noticed payload = {{rawDamen}} />:null}
+            {activeTab === 'crush'? <Crush payload = {{rawDamen}} />:null}
             {/* <Rank/> */}
         </div>
     );
