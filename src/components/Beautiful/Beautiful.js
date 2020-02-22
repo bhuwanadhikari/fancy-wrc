@@ -7,6 +7,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Rank from '../Rank/Rank';
+
+import eloRating from '../helpers/elo-alg';
+
+import firebase from '../../firebase/index';
+import 'firebase/firestore'
+
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -21,46 +27,101 @@ const useStyles = makeStyles(theme => ({
 
 
 const DuitaPhoto = (props) => {
-    const {rawDamen} = props.payload;
+    const { rawDamen } = props.payload;
     const classes = useStyles();
     const [showRank, setShowRank] = React.useState(false)
     const [stepsCount, setStepsCount] = React.useState(0)
     const [linksDame, setLinksDame] = React.useState(getRandomGirls(rawDamen)[0])
     const [richtigDame, setRichtigDame] = React.useState(getRandomGirls(rawDamen)[1])
 
-    const [gameData, setGameData] = React.useState([])
+    const [gameData, setGameData] = React.useState({})
+    const [serverData, setServerData] = React.useState({});
+    const [rankData, setRankData] = React.useState({})
 
-    React.useEffect(()=> {
-        if(stepsCount>4){
-            setShowRank(true)
+    React.useEffect(() => {
+        // Get data of beautifuls from the firebase
+        const getData = async () => {
+            const db = firebase.firestore()
+            var docRef = db.collection("glamorouswrc").doc("beautifuls");
+
+            docRef.get().then(function (doc) {
+                if (doc.exists) {
+                    console.log("Document data:", doc.data());
+                    setServerData(doc.data())
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch(function (error) {
+                console.log("Error getting document:", error);
+            });
+
+        }
+        getData()
+    }, []);
+
+
+    React.useEffect(() => {
+        if (stepsCount > 4) {
+            let toBePosted =serverData;
+            // Update the rating hai ta
+            for (let item in gameData) {
+                // console.log(serverData.[gameData[item].accepted], 'is accepted person');
+                let r1 = serverData[[gameData[item].accepted]]?serverData[[gameData[item].accepted]]:0; //rating of accepted
+                let r2 = serverData[[gameData[item].rejected]]?serverData[[gameData[item].rejected]]:0; //rating of rejected
+                const result = eloRating(r1, r2, 24, 1)
+                toBePosted = {
+                    ...toBePosted,
+                    [gameData[item].accepted]: result['Ra'],
+                    [gameData[item].rejected]: result['Rb'],
+                }
+            }
+            console.log(toBePosted)
+
+            const db = firebase.firestore();
+            db.collection('glamorouswrc').doc('beautifuls').set(toBePosted)
+            setRankData(toBePosted)
+            setShowRank(true);
+            setGameData({})
         }
     }, [stepsCount]);
 
     const _klicken = (chosenUser) => {
         console.log(chosenUser)
         let stepData = {}
-        if (chosenUser === linksDame.username){
-            stepData = {accepted : linksDame.username, rejected: richtigDame.username};
-        } else if(chosenUser === richtigDame.username){
-            stepData = {accepted : richtigDame.username, rejected: linksDame.username};
+        if (chosenUser === linksDame.username) {
+            stepData = { accepted: linksDame.username, rejected: richtigDame.username };
+        } else if (chosenUser === richtigDame.username) {
+            stepData = { accepted: richtigDame.username, rejected: linksDame.username };
         }
 
-        setGameData([...gameData,stepData])
+
+
+
+        setGameData({ ...gameData, [stepsCount]: stepData })
         setLinksDame(getRandomGirls(rawDamen)[0])
         setRichtigDame(getRandomGirls(rawDamen)[1])
         setStepsCount(stepsCount + 1);
+        // let message  = firebase.database().ref().child('game');
+        // firebase.database().ref('messages').push(gameData);
+        // firebase.database().ref('/').set(gameData)
+        // const db = firebase.firestore();
+        // db.collection('glamorouswrc').doc('beautifuls').set(gameData)
     }
     console.log('GameData', gameData)
     console.log('active girls', linksDame.username, richtigDame.username)
 
     const rankPayload = {
         title: 'Most Beautiful girls in WRC',
-        rannkData: []
+        rankData: rankData,
+        rawDamen: props.payload.rawDamen
     }
 
-    if (showRank) return <Rank payload = {rankPayload}/>;
+    console.log('data in parent rank data', rankData);
 
-    if (showRank) return <Rank/>;
+    if (showRank) return <Rank payload={rankPayload} />;
+
+    if (showRank) return <Rank />;
     return (
 
         <div className="main-body command">
@@ -80,7 +141,7 @@ const DuitaPhoto = (props) => {
             </Typography>
             <div
                 className="image-box"
-                onClick={() => { _klicken(linksDame.username)}}
+                onClick={() => { _klicken(linksDame.username) }}
             >
                 <img
                     src={linksDame.pictureUrl}
@@ -91,7 +152,7 @@ const DuitaPhoto = (props) => {
             </div>
             <div
                 className="image-box"
-                onClick={() => {_klicken(richtigDame.username)}}
+                onClick={() => { _klicken(richtigDame.username) }}
             >
                 <img
                     src={richtigDame.pictureUrl}
@@ -107,10 +168,10 @@ const DuitaPhoto = (props) => {
 
 
 const getRandomGirls = (rawDamen) => {
-    const firstDame = rawDamen[Math.floor(Math.random()*rawDamen.length)]
-    let secondDame = rawDamen[Math.floor(Math.random()*rawDamen.length)]
-    while(firstDame === secondDame){
-        secondDame = rawDamen[Math.floor(Math.random()*rawDamen.length)]
+    const firstDame = rawDamen[Math.floor(Math.random() * rawDamen.length)]
+    let secondDame = rawDamen[Math.floor(Math.random() * rawDamen.length)]
+    while (firstDame === secondDame) {
+        secondDame = rawDamen[Math.floor(Math.random() * rawDamen.length)]
     }
     return [firstDame, secondDame]
 }
