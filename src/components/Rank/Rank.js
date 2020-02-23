@@ -29,7 +29,6 @@ const Rank = (props) => {
 
 
     const rankList = sortable.map((item, index) => {
-        console.log(item)
         // console.log(item, '=================================')
         const person = rawDamen.find(user => user.username === item[0])
         console.log(person, 'person is--')
