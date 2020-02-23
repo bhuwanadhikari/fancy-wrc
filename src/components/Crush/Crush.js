@@ -172,7 +172,6 @@ const Crush = (props) => {
         errorMessage: playable ? null : true
     }
 
-    console.log('data in parent rank data', rankData);
     if (!playable) {
         var now = new Date();
         var fullDaysSinceEpoch = Math.floor(now / 8.64e7);
