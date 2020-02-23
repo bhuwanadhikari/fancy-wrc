@@ -139,7 +139,7 @@ const DuitaPhoto = (props) => {
             >
                 <img
                     src={linksDame.pictureUrl}
-                    alt="Glamorous WRC glamorous wrc western region campus"
+                    alt="Glamorous WRC glamorous wrc western region campus whatisin.tech"
                     className="first-image girl-image"
 
                 />
@@ -150,7 +150,7 @@ const DuitaPhoto = (props) => {
             >
                 <img
                     src={richtigDame.pictureUrl}
-                    alt="Glamorous WRC glamorous wrc western region campus"
+                    alt="Glamorous WRC glamorous wrc western region campus whatisin.tech"
                     className="first-image girl-image"
 
                 />

@@ -36,7 +36,7 @@ export default function Navbar(props) {
             <AppBar position="static" >
                 <Toolbar>
                     <Typography variant="h6" style={{ fontSize: '0.75em', fontWeight: 'bold' }} className={classes.title}>
-                        Glamorous WRC
+                        whatisin.tech
                     </Typography>
                     <Button
                         style={{ fontSize: '0.75em', fontWeight: 'bold' ,borderRadius: 0, borderBottom: activeTab ==='beautiful'?'2px solid white': 0 }}

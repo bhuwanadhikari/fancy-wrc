@@ -24,7 +24,7 @@ const About = (props) => {
     return (
         < div style={{ padding: '10px' }}>
             <Typography variant="h6" style={{ fontWeight: 'bold', padding: '40px' }} className={classes.title}>
-                About GlamorousWRC
+                About whatisin.tech
             </Typography>
 
             <div className="aboutTitle"

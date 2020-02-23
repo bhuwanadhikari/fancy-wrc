@@ -68,7 +68,7 @@ export default function Footer(props) {
                 color="inherit"
                 onClick={() => _clickTab('about')}
             >
-                About Glamorous WRC
+                About whatisin.tech
                     </div>
             <input
                 style={{ padding: '5px', width: '302px' }}
