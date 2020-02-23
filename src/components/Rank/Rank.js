@@ -31,7 +31,6 @@ const Rank = (props) => {
     const rankList = sortable.map((item, index) => {
         // console.log(item, '=================================')
         const person = rawDamen.find(user => user.username === item[0])
-        console.log(person, 'person is--')
         if (item[1] > 0 && index < 80) {
             return (
                 <div key={index} className="list-box">

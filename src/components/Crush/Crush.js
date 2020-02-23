@@ -159,8 +159,6 @@ const Crush = (props) => {
     }
 
 
-    let crushingDone = localStorage.getItem('crushingDone')|| '';
-    console.log(crushingDone.split(',').length, 'is the crush length now')
 
 
     // console.log(dame.username)
