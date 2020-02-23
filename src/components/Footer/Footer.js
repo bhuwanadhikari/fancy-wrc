@@ -71,12 +71,12 @@ export default function Footer(props) {
                 About whatisin.tech
                     </div>
             <input
-                style={{ padding: '5px', width: '302px' }}
-                placeholder='Wanna take part? Submit your name/facebook link!'
+                style={{ padding: '5px', width: '302px', fontSize: '0.75em' }}
+                placeholder='Wanna take part? Submit link of your photo from FB!'
                 ref={input => { request = input }}
             />
             <button
-                style={{ padding: '5px', }}
+                style={{ padding: '5px',fontSize: '0.75em'  }}
                 onClick={() => {
                     const db = firebase.firestore();
                     db.collection('glamorouswrc').doc(`requests`).update({ [new Date().getTime().toString()]: request.value })
@@ -86,12 +86,12 @@ export default function Footer(props) {
 
 
             <input
-                style={{ marginTop: '8px', padding: '2px', width: '200px' }}
+                style={{ marginTop: '8px', padding: '2px', width: '200px', fontSize: '0.75em' }}
                 placeholder='Type feedback or message!'
                 ref={input => { feedback = input }}
             />
             <button
-                style={{ padding: '2px', }}
+                style={{ padding: '2px', fontSize: '0.75em' }}
                 onClick={() => {
                     const db = firebase.firestore();
                     db.collection('glamorouswrc').doc(`zfeedbacks`).update({ [new Date().getTime().toString()]: feedback.value })
