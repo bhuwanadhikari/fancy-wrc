@@ -62,8 +62,8 @@ const DuitaPhoto = (props) => {
             // Update the rating hai ta
             for (let item in gameData) {
                 // console.log(serverData.[gameData[item].accepted], 'is accepted person');
-                let r1 = serverData[[gameData[item].accepted]]?serverData[[gameData[item].accepted]]:0; //rating of accepted
-                let r2 = serverData[[gameData[item].rejected]]?serverData[[gameData[item].rejected]]:0; //rating of rejected
+                let r1 = serverData[[gameData[item].accepted]]?serverData[[gameData[item].accepted]]:1000; //rating of accepted
+                let r2 = serverData[[gameData[item].rejected]]?serverData[[gameData[item].rejected]]:1000; //rating of rejected
                 const result = eloRating(r1, r2, 24, 1)
                 toBePosted = {
                     ...toBePosted,
