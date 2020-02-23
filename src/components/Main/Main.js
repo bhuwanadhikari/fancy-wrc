@@ -47,7 +47,6 @@ const Main = (props) => {
             <div
                 className="image-box"
                 onClick={() => {
-                    console.log('heelo')
                 }}
             >
                 <img
@@ -60,7 +59,6 @@ const Main = (props) => {
             <div
                 className="image-box"
                 onClick={() => {
-                    console.log('heelo')
                 }}
             >
                 <img

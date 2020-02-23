@@ -27,7 +27,6 @@ const useStyles = makeStyles({
 });
 
 function CardView() {
-    console.log(dumbasData);
     return dumbasData.map((item, index) => {
         return (
             <OneCard key={index} personObject={item} />

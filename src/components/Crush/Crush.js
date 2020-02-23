@@ -10,6 +10,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
 
+import firebase from '../../firebase/index';
+import 'firebase/firestore'
+
 import Rank from '../Rank/Rank'
 
 const useStyles = makeStyles(theme => ({
@@ -33,36 +36,151 @@ const Crush = (props) => {
 
     const [showRank, setShowRank] = React.useState(false)
     const [stepsCount, setStepsCount] = React.useState(0)
+    const [doneCrushGirls, setDoneCrushGirls] = React.useState([]);
+    const [playable, setPlayable] = React.useState(true);
+
+
+
+    // Helpers end--------------------------------------------------------
+    const backupTempDone = [...doneCrushGirls];
+    const getRandomGirl = () => {
+
+
+
+        const crushingDone = localStorage.getItem('crushingDone') || '';
+
+        // console.log(previouslyDone)
+        let crushingNotDone = rawDamen.filter((item, index) => {
+            return !crushingDone.includes(`${item.username},`)
+        })
+
+        crushingNotDone = crushingNotDone.filter(item => !backupTempDone.includes(`${item.username}`))
+
+        var randomGirl = crushingNotDone[Math.floor(Math.random() * crushingNotDone.length)];
+        return randomGirl;
+    }
+    // Helpers end--------------------------------------------------------
+
     const [dame, setDame] = React.useState(getRandomGirl(rawDamen))
 
-    const [gameData, setGameData] = React.useState([])
+    const [gameData, setGameData] = React.useState({})
+    const [serverData, setServerData] = React.useState({});
+    const [rankData, setRankData] = React.useState({});
 
-    
+    //Did mount
     React.useEffect(() => {
-        if (stepsCount > 3) {
-            //calculate the new rank
-            //wait until the data is sent
-            setShowRank(true)
+        // Get data of beautifuls from the firebase
+        const getData = async () => {
+            const db = firebase.firestore()
+            var docRef = db.collection("glamorouswrc").doc("crushs");
+
+            docRef.get().then(function (doc) {
+                if (doc.exists) {
+                    // console.log("Document data:", doc.data());
+                    setServerData(doc.data())
+                    setRankData(doc.data())
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch(function (error) {
+                console.log("Error getting document:", error);
+            });
+
+        }
+        getData()
+
+        let crushingDone = localStorage.getItem('crushingDone') || '';
+        let lastCrushPlayDate = localStorage.getItem('crushPlayDate');
+        var now = new Date();
+
+        var thisDay = Math.floor(now / 8.64e7);
+        if (crushingDone.split(',').length >= 45) {
+            setPlayable(false)
+        }
+        if (thisDay - parseInt(lastCrushPlayDate) > 6) {
+            localStorage.setItem('crushingDone', '');
+            localStorage.setItem('crushPlayDate', thisDay.toString());
+            setPlayable(true)
+        }
+
+
+    }, []);
+
+    React.useEffect(() => {
+        if (stepsCount >= 12) {
+            let toBePosted = serverData;
+            // Update the rating hai ta
+
+            const tempDone = [...doneCrushGirls]
+            for (let item in gameData) {
+                console.log(item)
+                // console.log(serverData.[gameData[item].accepted], 'is accepted person');
+                let result = serverData[item] ? serverData[item] : 0; //rating of accepted
+
+                if (gameData[item]) {
+                    result = result + 1
+                }
+
+                toBePosted = {
+                    ...toBePosted,
+                    [item]: result
+                }
+                tempDone.push(item)
+                backupTempDone.push(item)
+                setDoneCrushGirls(tempDone)
+            }
+
+            const db = firebase.firestore();
+            db.collection('glamorouswrc').doc('crushs').set(toBePosted)
+            setRankData(toBePosted)
+            setShowRank(true);
+
+            let doneDamenString = ''
+            for (let aDame of tempDone) {
+                doneDamenString = doneDamenString + aDame + ','
+            }
+
+
+            //Damen previously done crushing
+            let crushingDone = localStorage.getItem('crushingDone');
+            let toBeLocallyStored = `${crushingDone ? crushingDone : ""}${doneDamenString}`;
+            localStorage.setItem('crushingDone', toBeLocallyStored);
+            setGameData({})
         }
     }, [stepsCount]);
 
     const _klicken = (isChosen) => {
-        const stepData = { username: dame.username, isChosen }
 
-        setGameData([...gameData, stepData])
+        setGameData({ ...gameData, [dame.username]: isChosen })
         setDame(getRandomGirl(rawDamen));
         setStepsCount(stepsCount + 1);
+
     }
 
-    console.log(dame.username)
-    console.log(gameData)
+
+    let crushingDone = localStorage.getItem('crushingDone')|| '';
+    console.log(crushingDone.split(',').length, 'is the crush length now')
+
+
+    // console.log(dame.username)
+    // console.log(gameData)
 
     const rankPayload = {
-        title: 'Most Noticed girls in WRC',
-        rannkData: []
+        title: 'Crush of most boys',
+        rankType: 'noticed',
+        rankData: rankData,
+        rawDamen: props.payload.rawDamen,
+        errorMessage: playable ? null : true
     }
 
-    if (showRank) return <Rank payload = {rankPayload}/>;
+    console.log('data in parent rank data', rankData);
+    if (!playable) {
+        var now = new Date();
+        var fullDaysSinceEpoch = Math.floor(now / 8.64e7);
+        localStorage.setItem('crushPlayDate', fullDaysSinceEpoch.toString());
+    }
+    if (showRank || !playable) return <Rank payload={rankPayload} />;
     return (
 
         <div className="main-body command">
@@ -77,7 +195,7 @@ const Crush = (props) => {
             <Typography variant="h6"
                 style={{ fontSize: '0.9em', fontWeight: 'bold' }} className={classes.title}
             >
-                Have you noticed her in real life?
+                Do you have crush on her?
             </Typography>
 
             <div
@@ -121,9 +239,7 @@ const Crush = (props) => {
 
 
 
-const getRandomGirl = (rawDamen) => {
-    return rawDamen[Math.floor(Math.random() * rawDamen.length)]
-}
+
 
 
 export default Crush;

@@ -19,7 +19,6 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 
 const useStyles = makeStyles(theme => {
     const marginValue = (window.innerWidth % 350) / (parseInt(window.innerWidth / 350) * 2)
-    console.log(marginValue)
 
     return {
         card: {

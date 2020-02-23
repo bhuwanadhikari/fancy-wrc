@@ -57,7 +57,7 @@ export default function Navbar(props) {
                         color="inherit"
                         onClick={()=> _clickTab('crush')}
                     >
-                        {" "}With most CRUSHes
+                        {" "}Crush of the Most
                     </Button>
                 </Toolbar>
             </AppBar>

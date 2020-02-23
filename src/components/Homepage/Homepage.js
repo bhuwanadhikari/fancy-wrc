@@ -9,8 +9,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Main from '../Main/Main'
 import Beautiful from '../Beautiful/Beautiful'
 import Noticed from '../Noticed/Noticed'
+import About from '../About/About';
 import Crush from '../Crush/Crush'
 import Navbar from '../Navbar/Navbar'
+import Footer from '../Footer/Footer'
 import Rank from '../Rank/Rank'
 import './Homepage.css'
 
@@ -67,7 +69,10 @@ export default function ButtonAppBar() {
             {activeTab === 'beautiful'? <Beautiful payload = {{rawDamen}} />:null}
             {activeTab === 'noticed'? <Noticed payload = {{rawDamen}} />:null}
             {activeTab === 'crush'? <Crush payload = {{rawDamen}} />:null}
+            {activeTab === 'about'? <About />:null}
             {/* <Rank/> */}
+
+            <Footer updateActiveTab = {updateActiveTab} activeTab= {activeTab}/>
         </div>
     );
 }

@@ -1,14 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
-import Icon from '@material-ui/core/Icon';
-import SaveIcon from '@material-ui/icons/Save';
+
+import firebase from '../../firebase/index';
+import 'firebase/firestore'
 
 import Rank from '../Rank/Rank'
 
@@ -33,35 +30,150 @@ const Noticed = (props) => {
 
     const [showRank, setShowRank] = React.useState(false)
     const [stepsCount, setStepsCount] = React.useState(0)
+    const [doneNoticedGirls, setDoneNoticedGirls] = React.useState([]);
+    const [playable, setPlayable] = React.useState(true);
+
+
+
+    // Helpers end--------------------------------------------------------
+    const backupTempDone = [...doneNoticedGirls];
+    const getRandomGirl = () => {
+
+
+
+        const noticingDone = localStorage.getItem('noticingDone') || '';
+
+        // console.log(previouslyDone)
+        let noticingNotDone = rawDamen.filter((item, index) => {
+            return !noticingDone.includes(`${item.username},`)
+        })
+
+        noticingNotDone = noticingNotDone.filter(item => !backupTempDone.includes(`${item.username}`))
+
+        var randomGirl = noticingNotDone[Math.floor(Math.random() * noticingNotDone.length)];
+        return randomGirl;
+    }
+    // Helpers end--------------------------------------------------------
+
     const [dame, setDame] = React.useState(getRandomGirl(rawDamen))
 
-    const [gameData, setGameData] = React.useState([])
+    const [gameData, setGameData] = React.useState({})
+    const [serverData, setServerData] = React.useState({});
+    const [rankData, setRankData] = React.useState({});
+
+    //Did mount
+    React.useEffect(() => {
+        // Get data of beautifuls from the firebase
+        const getData = async () => {
+            const db = firebase.firestore()
+            var docRef = db.collection("glamorouswrc").doc("noticeds");
+
+            docRef.get().then(function (doc) {
+                if (doc.exists) {
+                    // console.log("Document data:", doc.data());
+                    setServerData(doc.data())
+                    setRankData(doc.data())
+
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch(function (error) {
+                console.log("Error getting document:", error);
+            });
+
+        }
+        getData()
+
+        let noticingDone = localStorage.getItem('noticingDone') || '';
+        let lastNoticedPlayDate = localStorage.getItem('noticedPlayDate');
+        var now = new Date();
+        var thisDay = Math.floor(now / 8.64e7);
+        if (noticingDone.split(',').length >= 75) {
+            setPlayable(false)
+        }
+        if (thisDay - parseInt(lastNoticedPlayDate) > 6) {
+            localStorage.setItem('noticingDone', '');
+            localStorage.setItem('noticedPlayDate', thisDay.toString())
+            setPlayable(true)
+        }
+
+
+    }, []);
 
     React.useEffect(() => {
-        if (stepsCount > 3) {
-            //calculate the new rank
-            //wait until the data is sent
-            setShowRank(true)
+        if (stepsCount >= 15) {
+            let toBePosted = serverData;
+            // Update the rating hai ta
+
+            const tempDone = [...doneNoticedGirls]
+            for (let item in gameData) {
+                console.log(item)
+                // console.log(serverData.[gameData[item].accepted], 'is accepted person');
+                let result = serverData[item] ? serverData[item] : 0; //rating of accepted
+
+                if (gameData[item]) {
+                    result = result + 1
+                }
+
+                toBePosted = {
+                    ...toBePosted,
+                    [item]: result
+                }
+                tempDone.push(item)
+                backupTempDone.push(item)
+                setDoneNoticedGirls(tempDone)
+            }
+            // console.log(toBePosted)
+
+            const db = firebase.firestore();
+            db.collection('glamorouswrc').doc('noticeds').set(toBePosted)
+            setRankData(toBePosted)
+            setShowRank(true);
+
+            let doneDamenString = ''
+            for (let aDame of tempDone) {
+                doneDamenString = doneDamenString + aDame + ','
+            }
+
+
+            //Damen previously done noticing
+            let noticingDone = localStorage.getItem('noticingDone');
+            let toBeLocallyStored = `${noticingDone ? noticingDone : ""}${doneDamenString}`;
+            localStorage.setItem('noticingDone', toBeLocallyStored);
+            setGameData({})
         }
     }, [stepsCount]);
 
     const _klicken = (isChosen) => {
-        const stepData = { username: dame.username, isChosen }
 
-        setGameData([...gameData, stepData])
+        setGameData({ ...gameData, [dame.username]: isChosen })
         setDame(getRandomGirl(rawDamen));
         setStepsCount(stepsCount + 1);
+
     }
 
-    console.log(dame.username)
-    console.log(gameData)
+
+
+
+    // console.log(dame.username)
+    // console.log(gameData)
 
     const rankPayload = {
         title: 'Most Noticed girls in WRC',
-        rannkData: []
+        rankType: 'noticed',
+        rankData: rankData,
+        rawDamen: props.payload.rawDamen,
+        errorMessage: playable ? null : true
     }
 
-    if (showRank) return <Rank payload = {rankPayload}/>;
+    console.log('data in parent rank data', rankData);
+    if (!playable) {
+        var now = new Date();
+        var fullDaysSinceEpoch = Math.floor(now / 8.64e7);
+        localStorage.setItem('noticedPlayDate', fullDaysSinceEpoch.toString());
+    }
+    if (showRank || !playable) return <Rank payload={rankPayload} />;
     return (
 
         <div className="main-body command">
@@ -120,9 +232,7 @@ const Noticed = (props) => {
 
 
 
-const getRandomGirl = (rawDamen) => {
-    return rawDamen[Math.floor(Math.random() * rawDamen.length)]
-}
+
 
 
 export default Noticed;

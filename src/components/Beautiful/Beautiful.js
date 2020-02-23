@@ -1,11 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import Rank from '../Rank/Rank';
 
 import eloRating from '../helpers/elo-alg';
@@ -46,7 +41,7 @@ const DuitaPhoto = (props) => {
 
             docRef.get().then(function (doc) {
                 if (doc.exists) {
-                    console.log("Document data:", doc.data());
+                    // console.log("Document data:", doc.data());
                     setServerData(doc.data())
                 } else {
                     // doc.data() will be undefined in this case
@@ -62,7 +57,7 @@ const DuitaPhoto = (props) => {
 
 
     React.useEffect(() => {
-        if (stepsCount > 4) {
+        if (stepsCount >= 10) {
             let toBePosted =serverData;
             // Update the rating hai ta
             for (let item in gameData) {
@@ -76,7 +71,6 @@ const DuitaPhoto = (props) => {
                     [gameData[item].rejected]: result['Rb'],
                 }
             }
-            console.log(toBePosted)
 
             const db = firebase.firestore();
             db.collection('glamorouswrc').doc('beautifuls').set(toBePosted)
@@ -87,7 +81,6 @@ const DuitaPhoto = (props) => {
     }, [stepsCount]);
 
     const _klicken = (chosenUser) => {
-        console.log(chosenUser)
         let stepData = {}
         if (chosenUser === linksDame.username) {
             stepData = { accepted: linksDame.username, rejected: richtigDame.username };
@@ -108,16 +101,17 @@ const DuitaPhoto = (props) => {
         // const db = firebase.firestore();
         // db.collection('glamorouswrc').doc('beautifuls').set(gameData)
     }
-    console.log('GameData', gameData)
-    console.log('active girls', linksDame.username, richtigDame.username)
+    // console.log('GameData', gameData)
+    // console.log('active girls', linksDame.username, richtigDame.username)
 
     const rankPayload = {
         title: 'Most Beautiful girls in WRC',
+        rankType: 'beautiful',
         rankData: rankData,
         rawDamen: props.payload.rawDamen
     }
 
-    console.log('data in parent rank data', rankData);
+    // console.log('data in parent rank data', rankData);
 
     if (showRank) return <Rank payload={rankPayload} />;
 
@@ -145,7 +139,7 @@ const DuitaPhoto = (props) => {
             >
                 <img
                     src={linksDame.pictureUrl}
-                    alt="western region campus"
+                    alt="Glamorous WRC glamorous wrc western region campus"
                     className="first-image girl-image"
 
                 />
@@ -156,7 +150,7 @@ const DuitaPhoto = (props) => {
             >
                 <img
                     src={richtigDame.pictureUrl}
-                    alt="western region campus"
+                    alt="Glamorous WRC glamorous wrc western region campus"
                     className="first-image girl-image"
 
                 />

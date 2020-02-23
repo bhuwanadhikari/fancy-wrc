@@ -9,7 +9,7 @@ function  Probability(rating1, rating2){
 // # d determines whether 
 // # Player A wins or Player B.  
 function EloRating(Ra, Rb, K, d){   
-    const konst = 24
+    const konst = 4
     // # To calculate the Winning 
     // # Probability of Player B 
     const Pb = Probability(Ra, Rb) 
