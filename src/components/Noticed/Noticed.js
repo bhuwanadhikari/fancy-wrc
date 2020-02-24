@@ -181,9 +181,11 @@ const Noticed = (props) => {
                     paddding: '50px'
                 }}
             >
-                Play to see the rank of Most Noticed Girls of WRC.
+                {/* Play to see the rank of Most Noticed Girls of WRC. */}
+                This category is launching soon in few hours. Stay tuned.
+
             </Typography>
-            <Typography variant="h6"
+            {/* <Typography variant="h6"
                 style={{ fontSize: '0.9em', fontWeight: 'bold' }} className={classes.title}
             >
                 Have you noticed her in real life?
@@ -223,7 +225,7 @@ const Noticed = (props) => {
                     Yeah
                 </Button>
 
-            </div>
+            </div> */}
         </div>
     )
 }

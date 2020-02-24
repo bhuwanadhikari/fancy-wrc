@@ -79,7 +79,7 @@ export default function Footer(props) {
                 style={{ padding: '5px',fontSize: '0.75em'  }}
                 onClick={() => {
                     const db = firebase.firestore();
-                    db.collection('glamorouswrc').doc(`requests`).update({ [new Date().getTime().toString()]: request.value })
+                    db.collection('glamorouswrc').doc(`requests`).set({ [new Date().getTime().toString()]: request.value })
                     request.value = ''
                 }} >Submit</button>
             <br />
@@ -94,7 +94,7 @@ export default function Footer(props) {
                 style={{ padding: '2px', fontSize: '0.75em' }}
                 onClick={() => {
                     const db = firebase.firestore();
-                    db.collection('glamorouswrc').doc(`zfeedbacks`).update({ [new Date().getTime().toString()]: feedback.value })
+                    db.collection('glamorouswrc').doc(`zfeedbacks`).set({ [new Date().getTime().toString()]: feedback.value })
                     feedback.value = ''
                 }} >Send</button>
 

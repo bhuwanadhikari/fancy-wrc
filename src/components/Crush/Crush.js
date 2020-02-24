@@ -69,10 +69,11 @@ const Crush = (props) => {
 
     //Did mount
     React.useEffect(() => {
+        console.log('here we go')
         // Get data of beautifuls from the firebase
         const getData = async () => {
             const db = firebase.firestore()
-            var docRef = db.collection("glamorouswrc").doc("crushs");
+            var docRef = db.collection("glamorouswrc").doc("crush2");
 
             docRef.get().then(function (doc) {
                 if (doc.exists) {
@@ -108,13 +109,15 @@ const Crush = (props) => {
     }, []);
 
     React.useEffect(() => {
-        if (stepsCount >= 12) {
+        console.log('inside the post things')
+        if (stepsCount >= 10) {
+            console.log('inside the post things')
             let toBePosted = serverData;
             // Update the rating hai ta
-
+            console.log(toBePosted, 'is to be posted before')
             const tempDone = [...doneCrushGirls]
             for (let item in gameData) {
-                console.log(item)
+                // console.log(item)
                 // console.log(serverData.[gameData[item].accepted], 'is accepted person');
                 let result = serverData[item] ? serverData[item] : 0; //rating of accepted
 
@@ -132,7 +135,7 @@ const Crush = (props) => {
             }
 
             const db = firebase.firestore();
-            db.collection('glamorouswrc').doc('crushs').set(toBePosted)
+            db.collection('glamorouswrc').doc('crushs').update(toBePosted)
             setRankData(toBePosted)
             setShowRank(true);
 
@@ -141,7 +144,7 @@ const Crush = (props) => {
                 doneDamenString = doneDamenString + aDame + ','
             }
 
-
+            console.log(toBePosted, 'tob be posted after')
             //Damen previously done crushing
             let crushingDone = localStorage.getItem('crushingDone');
             let toBeLocallyStored = `${crushingDone ? crushingDone : ""}${doneDamenString}`;
@@ -162,7 +165,6 @@ const Crush = (props) => {
 
 
     // console.log(dame.username)
-    // console.log(gameData)
 
     const rankPayload = {
         title: 'Crush of the most boys',
@@ -187,9 +189,11 @@ const Crush = (props) => {
                     paddding: '50px'
                 }}
             >
-                Play to see the Crush of the Most Boys of WRC.
+                {/* Play to see the Crush of the Most Boys of WRC. */}
+                This category is launching soon in few hours. Stay tuned.
+
             </Typography>
-            <Typography variant="h6"
+            {/* <Typography variant="h6"
                 style={{ fontSize: '0.9em', fontWeight: 'bold' }} className={classes.title}
             >
                 Do you have crush on her?
@@ -227,9 +231,9 @@ const Crush = (props) => {
 
                 >
                     Yeah
-                </Button>
+                </Button> 
 
-            </div>
+            </div>*/}
         </div>
     )
 }

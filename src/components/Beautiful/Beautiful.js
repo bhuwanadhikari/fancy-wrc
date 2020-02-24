@@ -99,7 +99,7 @@ const DuitaPhoto = (props) => {
         // firebase.database().ref('messages').push(gameData);
         // firebase.database().ref('/').set(gameData)
         // const db = firebase.firestore();
-        // db.collection('glamorouswrc').doc('beautifuls').set(gameData)
+        // db.collection('whatisintech').doc('beautifuls').set(gameData)
     }
     // console.log('GameData', gameData)
     // console.log('active girls', linksDame.username, richtigDame.username)
