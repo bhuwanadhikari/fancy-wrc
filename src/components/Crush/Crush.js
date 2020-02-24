@@ -132,7 +132,7 @@ const Crush = (props) => {
             }
 
             const db = firebase.firestore();
-            db.collection('glamorouswrc').doc('crushs').set(toBePosted)
+            db.collection('glamorouswrc').doc('crushs').update(toBePosted)
             setRankData(toBePosted)
             setShowRank(true);
 

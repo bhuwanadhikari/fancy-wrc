@@ -52,8 +52,6 @@ const About = (props) => {
                 <br />
                 likers of those 1000 photos.
                 <br />
-                -Then, about 20 student were taken manually who are genuinely from WRC.
-                <br />
                 -Suppose, if a person likes more than 10 different photos of different people from the pool of that 1000 people,
                 then the person must be a student of WRC.
                 <br />

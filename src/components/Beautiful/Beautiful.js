@@ -105,7 +105,7 @@ const DuitaPhoto = (props) => {
     // console.log('active girls', linksDame.username, richtigDame.username)
 
     const rankPayload = {
-        title: 'Most Beautiful girls in WRC',
+        title: 'Most Beautiful girls in WRC(Top 80 only)',
         rankType: 'beautiful',
         rankData: rankData,
         rawDamen: props.payload.rawDamen

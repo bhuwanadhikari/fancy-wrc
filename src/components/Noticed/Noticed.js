@@ -127,7 +127,7 @@ const Noticed = (props) => {
             // console.log(toBePosted)
 
             const db = firebase.firestore();
-            db.collection('glamorouswrc').doc('noticeds').set(toBePosted)
+            db.collection('glamorouswrc').doc('noticeds').update(toBePosted)
             setRankData(toBePosted)
             setShowRank(true);
 

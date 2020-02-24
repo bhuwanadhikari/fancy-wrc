@@ -40,7 +40,7 @@ const Rank = (props) => {
 
                     <div className="agaadiko">
                         <div className="rank-value">Rank: {index + 1}</div>
-                        <a href={'https://facebook.com' + person.username} target="_blank" className="iconpart">
+                        <a href={'https://facebook.com/' + person.username} target="_blank" className="iconpart">
                             <FacebookIcon style={{ fontSize: '24px', cursor: 'pointer' }} /></a>
                     </div>
 

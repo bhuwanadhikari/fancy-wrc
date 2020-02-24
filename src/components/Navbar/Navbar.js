@@ -35,7 +35,7 @@ export default function Navbar(props) {
         <div className={classes.root}>
             <AppBar position="static" >
                 <Toolbar>
-                    <Typography variant="h6" style={{ fontSize: '0.75em', fontWeight: 'bold' }} className={classes.title}>
+                    <Typography variant="h6" style={{ fontSize: '0.85em', fontWeight: 'bold' }} className={classes.title}>
                         whatisin.tech
                     </Typography>
                     <Button
