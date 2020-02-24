@@ -108,7 +108,6 @@ const Noticed = (props) => {
 
             const tempDone = [...doneNoticedGirls]
             for (let item in gameData) {
-                console.log(item)
                 // console.log(serverData.[gameData[item].accepted], 'is accepted person');
                 let result = serverData[item] ? serverData[item] : 0; //rating of accepted
 

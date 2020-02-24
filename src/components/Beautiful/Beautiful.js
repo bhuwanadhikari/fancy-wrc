@@ -58,12 +58,12 @@ const DuitaPhoto = (props) => {
 
     React.useEffect(() => {
         if (stepsCount >= 10) {
-            let toBePosted =serverData;
+            let toBePosted = serverData;
             // Update the rating hai ta
             for (let item in gameData) {
                 // console.log(serverData.[gameData[item].accepted], 'is accepted person');
-                let r1 = serverData[[gameData[item].accepted]]?serverData[[gameData[item].accepted]]:1000; //rating of accepted
-                let r2 = serverData[[gameData[item].rejected]]?serverData[[gameData[item].rejected]]:1000; //rating of rejected
+                let r1 = serverData[[gameData[item].accepted]] ? serverData[[gameData[item].accepted]] : 1000; //rating of accepted
+                let r2 = serverData[[gameData[item].rejected]] ? serverData[[gameData[item].rejected]] : 1000; //rating of rejected
                 const result = eloRating(r1, r2, 24, 1)
                 toBePosted = {
                     ...toBePosted,
@@ -103,9 +103,12 @@ const DuitaPhoto = (props) => {
     }
     // console.log('GameData', gameData)
     // console.log('active girls', linksDame.username, richtigDame.username)
+    // console.log(linksDame.username, richtigDame.username)
+    // console.log(linksDame.pictureUrl)
+    // console.log(richtigDame.pictureUrl)
 
     const rankPayload = {
-        title: 'Most Beautiful girls in WRC(Top 80 only)',
+        title: 'Most Beautiful girls in WRC (Top 80 only)',
         rankType: 'beautiful',
         rankData: rankData,
         rawDamen: props.payload.rawDamen
@@ -162,10 +165,16 @@ const DuitaPhoto = (props) => {
 
 
 const getRandomGirls = (rawDamen) => {
-    const firstDame = rawDamen[Math.floor(Math.random() * rawDamen.length)]
-    let secondDame = rawDamen[Math.floor(Math.random() * rawDamen.length)]
+    const getRan = () => {
+        return Math.floor(Math.random() * rawDamen.length)
+    }
+    let ran1 = getRan()
+    let ran2 = getRan()
+    const firstDame = rawDamen[ran1]
+    let secondDame = rawDamen[ran2]
     while (firstDame === secondDame) {
-        secondDame = rawDamen[Math.floor(Math.random() * rawDamen.length)]
+        ran2 = getRan()
+        secondDame = rawDamen[ran2]
     }
     return [firstDame, secondDame]
 }

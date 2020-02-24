@@ -58,7 +58,7 @@ const Rank = (props) => {
 
     </div>
             ) : null}
-            <h1 className="rank-title">{title}</h1>
+            <h1 className="rank-title">{title} {" "}(Top 80 only)</h1>
             {rankList}
         </div>
     )

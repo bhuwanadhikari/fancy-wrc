@@ -165,7 +165,7 @@ const Crush = (props) => {
     // console.log(gameData)
 
     const rankPayload = {
-        title: 'Crush of most boys',
+        title: 'Crush of the most boys',
         rankType: 'noticed',
         rankData: rankData,
         rawDamen: props.payload.rawDamen,
