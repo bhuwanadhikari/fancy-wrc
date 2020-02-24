@@ -123,10 +123,10 @@ const Noticed = (props) => {
                 backupTempDone.push(item)
                 setDoneNoticedGirls(tempDone)
             }
-            // console.log(toBePosted)
+            console.log(toBePosted)
 
             const db = firebase.firestore();
-            db.collection('glamorouswrc').doc('noticeds').update(toBePosted)
+            db.collection('glamorouswrc').doc('noticeds').set(toBePosted)
             setRankData(toBePosted)
             setShowRank(true);
 
@@ -181,7 +181,7 @@ const Noticed = (props) => {
                     paddding: '50px'
                 }}
             >
-                Play to see the rank
+                Play to see the rank of Most Noticed Girls of WRC.
             </Typography>
             <Typography variant="h6"
                 style={{ fontSize: '0.9em', fontWeight: 'bold' }} className={classes.title}

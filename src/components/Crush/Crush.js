@@ -132,7 +132,7 @@ const Crush = (props) => {
             }
 
             const db = firebase.firestore();
-            db.collection('glamorouswrc').doc('crushs').update(toBePosted)
+            db.collection('glamorouswrc').doc('crushs').set(toBePosted)
             setRankData(toBePosted)
             setShowRank(true);
 
@@ -187,7 +187,7 @@ const Crush = (props) => {
                     paddding: '50px'
                 }}
             >
-                Play to see the rank
+                Play to see the Crush of the Most Boys of WRC.
             </Typography>
             <Typography variant="h6"
                 style={{ fontSize: '0.9em', fontWeight: 'bold' }} className={classes.title}

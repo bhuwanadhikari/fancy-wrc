@@ -128,7 +128,7 @@ const DuitaPhoto = (props) => {
                     paddding: '50px'
                 }}
             >
-                Play to see the rank
+                Play to see the rank of Most Beautiful Girls of WRC.
             </Typography>
             <Typography variant="h6"
                 style={{ fontSize: '0.9em', fontWeight: 'bold' }} className={classes.title}
