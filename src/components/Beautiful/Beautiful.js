@@ -104,8 +104,8 @@ const DuitaPhoto = (props) => {
     // console.log('GameData', gameData)
     // console.log('active girls', linksDame.username, richtigDame.username)
     // console.log(linksDame.username, richtigDame.username)
-    // console.log(linksDame.pictureUrl)
-    // console.log(richtigDame.pictureUrl)
+    console.log(linksDame.pictureUrl)
+    console.log(richtigDame.pictureUrl)
 
     const rankPayload = {
         title: 'Most Beautiful girls in WRC (Top 80 only)',
